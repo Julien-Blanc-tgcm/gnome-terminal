@@ -48,9 +48,9 @@ Last-Update: 2017-07-07
  #define TERMINAL_PROFILE_NAME_KEY                       "name"
  #define TERMINAL_PROFILE_PALETTE_KEY                    "palette"
  #define TERMINAL_PROFILE_REWRAP_ON_RESIZE_KEY           "rewrap-on-resize"
---- gnome-terminal-3.22.2.orig/src/terminal-window.c
-+++ gnome-terminal-3.22.2/src/terminal-window.c
-@@ -3014,6 +3014,48 @@ sync_screen_title (TerminalScreen *scree
+--- gnome-terminal-3.30.2.orig/src/terminal-window.c
++++ gnome-terminal-3.30.2/src/terminal-window.c
+@@ -2410,6 +2410,48 @@
                          title && title[0] ? title : _("Terminal"));
  }
  
@@ -97,14 +97,14 @@ Last-Update: 2017-07-07
 +}
 +
  static void
- sync_screen_icon_title (TerminalScreen *screen,
-                         GParamSpec *psepc,
-@@ -3434,6 +3476,8 @@ mdi_screen_added_cb (TerminalMdiContaine
+ screen_font_any_changed_cb (TerminalScreen *screen,
+                             GParamSpec *psepc,
+@@ -2781,6 +2781,8 @@ 
    /* FIXME: only connect on the active screen, not all screens! */
    g_signal_connect (screen, "notify::title",
                      G_CALLBACK (sync_screen_title), window);
 +  g_signal_connect (screen, "notify::title",
 +                    G_CALLBACK (sync_screen_profile), window);
-   g_signal_connect (screen, "notify::icon-title",
-                     G_CALLBACK (sync_screen_icon_title), window);
-   g_signal_connect (screen, "notify::icon-title-set",
+   g_signal_connect (screen, "notify::font-desc",
+                     G_CALLBACK (screen_font_any_changed_cb), window);
+   g_signal_connect (screen, "notify::font-scale",
